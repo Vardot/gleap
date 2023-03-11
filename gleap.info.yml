@@ -1,0 +1,6 @@
+name: Gleap
+type: module
+description: Gleap service integration.
+package: Gleap
+core_version_requirement: ^8 || ^9 || ^10
+configure: gleap_configuration

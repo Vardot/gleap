@@ -1,0 +1,5 @@
+gleap_configuration:
+  title: 'Gleap'
+  route_name: gleap_configuration
+  description: 'Gleap configuration.'
+  parent: system.admin_config_services

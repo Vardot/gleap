@@ -1,0 +1,4 @@
+administer gleap:
+  title: 'administer gleap'
+  description: 'Access the gleap configuration.'
+  restrict access: TRUE

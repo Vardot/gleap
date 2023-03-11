@@ -1,0 +1,9 @@
+gleap_configuration:
+  path: '/admin/config/services/gleap'
+  defaults:
+    _form: '\Drupal\gleap\Form\GleapConfiguration'
+    _title: 'Gleap'
+  requirements:
+    _permission: 'administer gleap'
+  options:
+    _admin_route: TRUE

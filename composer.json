@@ -1,0 +1,7 @@
+{
+    "name": "drupal/gleap",
+    "description": "Gleap service integration.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "require": {}
+}
