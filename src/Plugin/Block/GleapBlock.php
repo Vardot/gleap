@@ -13,6 +13,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Access\AccessResult;
 
 /**
  * Provides a Gleap block.
@@ -88,6 +89,10 @@ class GleapBlock extends BlockBase implements ContainerFactoryPluginInterface {
    * {@inheritdoc}
    */
   public function build(): array {
+    if (!$this->configFactory->get('gleap_enable')) {
+      return [];
+    }
+
     if (empty($this->configFactory->get('gleap_api_key')) && ($this->currentUser->hasPermission('administer gleap'))) {
       $url = Url::fromUri('route:gleap_configuration');
       $link = new Link($this->t('here'), $url);
@@ -100,6 +105,18 @@ class GleapBlock extends BlockBase implements ContainerFactoryPluginInterface {
     return [
       '#markup' => $script,
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function blockAccess(AccountInterface $account) {
+    $current_roles = $this->currentUser->getRoles();
+    if (!empty(array_intersect($current_roles, $this->configFactory->get('gleap_roles')))) {
+      return AccessResult::allowed();
+    } else {
+      return AccessResult::forbidden();
+    }
   }
 
   /**
