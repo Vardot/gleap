@@ -112,7 +112,7 @@ class GleapBlock extends BlockBase implements ContainerFactoryPluginInterface {
    */
   protected function blockAccess(AccountInterface $account) {
     $current_roles = $this->currentUser->getRoles();
-    if (!empty(array_intersect($current_roles, $this->configFactory->get('gleap_roles')))) {
+    if (!empty(array_intersect($current_roles, $this->configFactory->get('gleap_roles') ?? []))) {
       return AccessResult::allowed();
     } else {
       return AccessResult::forbidden();
