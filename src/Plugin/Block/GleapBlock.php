@@ -122,8 +122,8 @@ class GleapBlock extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * {@inheritdoc}
    */
-  public function getCacheContexts() {
-    return Cache::mergeContexts(parent::getCacheContexts(), ['route']);
+  public function getCacheTags() {
+    return Cache::mergeTags(parent::getCacheTags(), ['config:gleap.gleap_configuration']);
   }
 
 }
