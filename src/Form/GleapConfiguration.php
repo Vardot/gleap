@@ -65,7 +65,7 @@ class GleapConfiguration extends ConfigFormBase {
       '#type' => 'checkboxes',
       '#title' => $this->t('Enable Gleap for roles:'),
       '#options' => $roles,
-      '#default_value' => $config->get('gleap_roles'),
+      '#default_value' => $config->get('gleap_roles') ?: [],
       '#required' => TRUE,
       '#states' => $states,
     ];
