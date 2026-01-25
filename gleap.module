@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Gleap module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function gleap_theme($existing, $type, $theme, $path) {
+  return [
+    'gleap_block_template' => [
+      'variables' => [
+        'back_link' => NULL,
+        'show_message' => FALSE,
+        'message' => NULL,
+      ],
+      'template' => 'gleap-block-template',
+    ],
+  ];
+}

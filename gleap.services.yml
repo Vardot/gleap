@@ -1,0 +1,4 @@
+services:
+  Drupal\gleap\Hook\ThemeHooks:
+    class: Drupal\gleap\Hook\ThemeHooks
+    autowire: true

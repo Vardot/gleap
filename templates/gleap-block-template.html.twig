@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Gleap module.
+ */
+
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\gleap\Hook\ThemeHooks;
+
+/**
+ * Implements hook_theme().
+ */
+// @phpstan-ignore-next-line
+#[LegacyHook]
+function gleap_theme($existing, $type, $theme, $path) {
+  // Delegate to the ThemeHooks class.
+  return \Drupal::service(ThemeHooks::class)->theme($existing, $type, $theme, $path);
+}

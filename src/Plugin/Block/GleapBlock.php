@@ -37,7 +37,7 @@ class GleapBlock extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * The current user.
    *
-   * @var Drupal\Core\Session\AccountInterface
+   * @var \Drupal\Core\Session\AccountInterface
    */
   protected $currentUser;
 
@@ -59,7 +59,7 @@ class GleapBlock extends BlockBase implements ContainerFactoryPluginInterface {
    *   The plugin path destination.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The configuration factory.
-   * @param Drupal\Core\Session\AccountInterface $currentUser
+   * @param \Drupal\Core\Session\AccountInterface $currentUser
    *   The current user.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
@@ -97,14 +97,36 @@ class GleapBlock extends BlockBase implements ContainerFactoryPluginInterface {
       $url = Url::fromUri('route:gleap_configuration');
       $link = new Link($this->t('here'), $url);
       $link = $link->toString()->getGeneratedLink();
-      $script = Markup::create($this->t('Please fill out the Gleap API key from %link'), ['%link' => $link]);
+      $message = Markup::create($this->t('Please fill out the Gleap API key from %link', ['%link' => $link]));
+
+      return [
+        '#theme' => 'gleap_block_template',
+        '#show_message' => TRUE,
+        '#message' => $message,
+        '#cache' => [
+          'tags' => ['config:gleap.gleap_configuration'],
+        ],
+      ];
     }
     else {
-      $script = Markup::create('<script>!function(Gleap,t,i){if(!(Gleap=window.Gleap=window.Gleap||[]).invoked){for(window.GleapActions=[],Gleap.invoked=!0,Gleap.methods=["identify","clearIdentity","attachCustomData","setCustomData","removeCustomData","clearCustomData","registerCustomAction","logEvent","sendSilentCrashReport","startFeedbackFlow","setAppBuildNumber","setAppVersionCode","preFillForm","setApiUrl","setFrameUrl","isOpened","open","close","on","setLanguage","setOfflineMode","initialize"],Gleap.f=function(e){return function(){var t=Array.prototype.slice.call(arguments);window.GleapActions.push({e:e,a:t})}},t=0;t<Gleap.methods.length;t++)Gleap[i=Gleap.methods[t]]=Gleap.f(i);Gleap.load=function(){var t=document.getElementsByTagName("head")[0],i=document.createElement("script");i.type="text/javascript",i.async=!0,i.src="https://js.gleap.io/latest/index.js",t.appendChild(i)},Gleap.load(), Gleap.initialize("' . $this->configFactory->get('gleap_api_key') . '") }}();</script>');
+      return [
+        '#theme' => 'gleap_block_template',
+        '#show_message' => FALSE,
+        '#attached' => [
+          'library' => [
+            'gleap/gleap',
+          ],
+          'drupalSettings' => [
+            'gleap' => [
+              'apiKey' => $this->configFactory->get('gleap_api_key'),
+            ],
+          ],
+        ],
+        '#cache' => [
+          'tags' => ['config:gleap.gleap_configuration'],
+        ],
+      ];
     }
-    return [
-      '#markup' => $script,
-    ];
   }
 
   /**
