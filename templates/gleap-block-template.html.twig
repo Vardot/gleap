@@ -1,19 +1,16 @@
-<?php
-
+{#
 /**
  * @file
- * Primary module hooks for Gleap module.
+ * Gleap block template.
+ *
+ * Available variables:
+ * - show_message: Boolean flag indicating if a message should be displayed.
+ * - message: The message to display (only when show_message is true).
  */
+#}
 
-use Drupal\Core\Hook\Attribute\LegacyHook;
-use Drupal\gleap\Hook\ThemeHooks;
-
-/**
- * Implements hook_theme().
- */
-// @phpstan-ignore-next-line
-#[LegacyHook]
-function gleap_theme($existing, $type, $theme, $path) {
-  // Delegate to the ThemeHooks class.
-  return \Drupal::service(ThemeHooks::class)->theme($existing, $type, $theme, $path);
-}
+{% if show_message and message %}
+  <div class="gleap-message">
+    {{ message }}
+  </div>
+{% endif %}
